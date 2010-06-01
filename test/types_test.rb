@@ -12,7 +12,14 @@ class TypesTest < CassandraObjectTestCase
       end
 
       should "raises an error on non-Integer input" do
-        assert_raises(ArgumentError) { CassandraObject::IntegerType::encode('')}
+        assert_raises(ArgumentError) { CassandraObject::IntegerType::encode('asdf')}
+      end
+
+      should "work with integer-like strings" do
+        assert_nothing_raised {
+          i = "1"
+          assert_equal i.to_s, CassandraObject::IntegerType.encode(i)
+        }
       end
 
       should "work with Bignums" do
