@@ -15,5 +15,9 @@ class CallbacksTest < CassandraObjectTestCase
     should "have had after_create called" do
       assert @customer.after_create_called?
     end
+
+    should "have had after_create called again" do
+      assert @customer.after_create_called_again?
+    end
   end
 end
