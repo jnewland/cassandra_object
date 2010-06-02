@@ -22,6 +22,7 @@ class Customer < CassandraObject::Base
   validates_presence_of :last_name
 
   after_create :set_after_create_called
+  after_create :set_after_create_called_again
 
   key :uuid
 
@@ -36,6 +37,14 @@ class Customer < CassandraObject::Base
 
   def set_after_create_called
     @after_create_called = true
+  end
+
+  def after_create_called_again?
+    @after_create_called_again
+  end
+
+  def set_after_create_called_again
+    @after_create_called_again = true
   end
 
   private

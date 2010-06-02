@@ -17,11 +17,12 @@ module CassandraObject
     end
     
     module InstanceMethods
-      def run_callbacks(callback)
+      def run_callbacks(callback, options = {}, &terminator)
         if block_given?
-          unless false == super("before_#{callback}")
+          inverse_terminator = Proc.new { |*args| !terminator.call(args[0]) }
+          unless false == super("before_#{callback}", options, &inverse_terminator)
             yield.tap do
-              super("after_#{callback}")
+              super("after_#{callback}", options, &inverse_terminator)
             end
           end
         else
